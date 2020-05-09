@@ -1,6 +1,6 @@
-package com.crm.apis.services.directory.users.forms;
+package com.crm.apis.services.directory.users.domains;
 
-public class User {
+public class UserDocument {
 
     private String primaryEmail;
 
