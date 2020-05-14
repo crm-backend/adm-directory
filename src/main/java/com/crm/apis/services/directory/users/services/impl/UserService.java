@@ -28,6 +28,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -106,12 +107,45 @@ public class UserService extends CommonService implements IUserService {
     public void deleteUser(Long id) {
         userRepository.findById(id).map(u -> {
             u.setDeleted(true);
+            u.setDeletedAt(new Date());
             return userRepository.save(u);
         }).orElseThrow(() -> {
             throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, id.toString());
         });
     }
 
+    @Override
+    public void suspendedUser(Long id, Boolean value) {
+        userRepository.findById(id).map(u -> {
+            u.setSuspended(true);
+            u.setSuspendedAt(new Date());
+            return userRepository.save(u);
+        }).orElseThrow(() -> {
+            throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, id.toString());
+        });
+    }
+
+    @Override
+    public void adminUser(Long id, Boolean value) {
+        userRepository.findById(id).map(u -> {
+            u.setAdmin(true);
+            u.setIsAdminAt(new Date());
+            return userRepository.save(u);
+        }).orElseThrow(() -> {
+            throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, id.toString());
+        });
+    }
+
+    @Override
+    public void enableUser(Long id, Boolean value) {
+        userRepository.findById(id).map(u -> {
+            u.setEnabled(true);
+            u.setEnabledAt(new Date());
+            return userRepository.save(u);
+        }).orElseThrow(() -> {
+            throw exception(EntityType.USER, ExceptionType.ENTITY_NOT_FOUND, id.toString());
+        });
+    }
 
     @Override
     public UserEmail addEmail(UserEmail userEmail) {
@@ -122,6 +156,23 @@ public class UserService extends CommonService implements IUserService {
     }
 
     @Override
+    public UserEmail updateEmail(UserEmail userEmail) {
+        UserEmailEntity entity = userEmailRules.update(userEmail);
+        userEmailRepository.save(entity);
+        return userEmailMapper.toForm(entity);
+    }
+
+    @Override
+    public void deleteEmail(Long id) {
+        userEmailRepository.findById(id).map(u -> {
+            u.setDeleted(true);
+            return userEmailRepository.save(u);
+        }).orElseThrow(() -> {
+            throw exception(EntityType.USER_EMAIL, ExceptionType.ENTITY_NOT_FOUND, id.toString());
+        });
+    }
+
+    @Override
     public UserAddress addAddress(UserAddress userAddress) {
         UserAddressEntity entity = userAddressMapper.toDomain(userAddress);
         userAddressRules.create(entity);
@@ -129,4 +180,20 @@ public class UserService extends CommonService implements IUserService {
         return userAddressMapper.toForm(entity);
     }
 
+    @Override
+    public UserAddress updateAddress(UserAddress userAddress) {
+        UserAddressEntity entity = userAddressRules.update(userAddress);
+        userAddressRepository.save(entity);
+        return userAddressMapper.toForm(entity);
+    }
+
+    @Override
+    public void deleteAddress(Long id) {
+        userAddressRepository.findById(id).map(u -> {
+            u.setDeleted(true);
+            return userAddressRepository.save(u);
+        }).orElseThrow(() -> {
+            throw exception(EntityType.USER_ADDRESS, ExceptionType.ENTITY_NOT_FOUND, id.toString());
+        });
+    }
 }

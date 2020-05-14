@@ -3,6 +3,7 @@ package com.crm.apis.services.directory.users.domains;
 import com.crm.apis.common.services.domain.Domain;
 import lombok.Data;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "adm_user")
+@Where(clause = "deleted=false")
 public class UserEntity extends Domain {
 
     private static final long serialVersionUID = 1L;
@@ -52,6 +54,7 @@ public class UserEntity extends Domain {
     private boolean ipWhitelisted;
 
     private boolean isAdmin;
+    private Date isAdminAt;
 
     private boolean isDelegatedAdmin;
 

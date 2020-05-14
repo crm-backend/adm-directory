@@ -5,5 +5,6 @@ package com.crm.apis.common.services.exceptions;
 public enum EntityType {
     USER,
     USER_EMAIL,
+    USER_ADDRESS,
     ROLE
 }

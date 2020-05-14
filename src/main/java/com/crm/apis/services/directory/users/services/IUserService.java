@@ -17,8 +17,16 @@ public interface IUserService {
     User createNewUser(User user) ;
     User updateUser(User user) ;
     void deleteUser(Long id) ;
+    void suspendedUser(Long id,Boolean value) ;
+    void adminUser(Long id,Boolean value) ;
+    void enableUser(Long id,Boolean value) ;
 
     UserEmail addEmail(UserEmail userEmail);
+    UserEmail updateEmail(UserEmail userEmail);
+    void deleteEmail(Long id) ;
+
 
     UserAddress addAddress(UserAddress userAddress);
+    UserAddress updateAddress(UserAddress userAddress);
+    void deleteAddress(Long id) ;
 }

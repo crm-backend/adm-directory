@@ -3,6 +3,7 @@ package com.crm.apis.services.directory.users.forms;
 import com.crm.apis.common.services.web.response.Form;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -27,6 +28,8 @@ public class User extends Form {
     private boolean ipWhitelisted;
 
     private boolean isAdmin;
+
+    private Date isAdminAt;
 
     private boolean isDelegatedAdmin;
 

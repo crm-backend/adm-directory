@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * @author PoleData.
  */
 @Repository
-public interface UserExternalIdRepository extends JpaRepository<UserEntity, String> {
+public interface UserExternalIdRepository extends JpaRepository<UserEntity, Long> {
 
     UserEntity findByPrimaryEmail(String primaryEmail);
 

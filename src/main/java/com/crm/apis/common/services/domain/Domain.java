@@ -2,6 +2,8 @@ package com.crm.apis.common.services.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,7 +24,10 @@ public abstract class Domain implements IDomain {
 
     private Date endAt;
 
+    @Type(type="yes_no")
     private boolean deleted;
+
+    private Date deletedAt;
 
     @Version
     private Long version;

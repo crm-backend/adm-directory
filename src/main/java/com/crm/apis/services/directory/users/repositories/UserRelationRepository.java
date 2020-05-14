@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * @author PoleData.
  */
 @Repository
-public interface UserRelationRepository extends JpaRepository<UserRelationEntity, String> {
+public interface UserRelationRepository extends JpaRepository<UserRelationEntity, Long> {
 
 
 }

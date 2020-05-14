@@ -56,14 +56,61 @@ public class UserController extends CommonController {
         return Response.ok().setPayload(userService.updateUser(user));
     }
 
+    @DeleteMapping("/{id}")
+    public Response deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return Response.ok();
+    }
+
+    @PutMapping("{id}/suspend")
+    public Response suspendedUser(@PathVariable Long id) {
+        userService.suspendedUser(id,true);
+        return Response.ok();
+    }
+
+    @PutMapping("{id}/unsuspend")
+    public Response unsuspend(@PathVariable Long id) {
+        userService.suspendedUser(id,false);
+        return Response.ok();
+    }
+
+    @PutMapping("{id}/setadmin")
+    public Response adminUser(@PathVariable Long id) {
+        userService.adminUser(id,true);
+        return Response.ok();
+    }
+    @PutMapping("{id}/notadmin")
+    public Response unSetAdminUser(@PathVariable Long id) {
+        userService.adminUser(id,false);
+        return Response.ok();
+    }
+
+    @PutMapping("{id}/enable")
+    public Response enableUser(@PathVariable Long id) {
+        userService.enableUser(id,true);
+        return Response.ok();
+    }
+    @PutMapping("{id}/desable")
+    public Response desable(@PathVariable Long id) {
+        userService.enableUser(id,false);
+        return Response.ok();
+    }
+
     @PostMapping("/add/email")
     public Response addEmail(@RequestBody UserEmail userEmail) {
         return Response.ok().setPayload(userService.addEmail(userEmail));
     }
     @PutMapping("/add/email")
     public Response updateEmail(@RequestBody UserEmail userEmail) {
-        return Response.ok().setPayload(userService.addEmail(userEmail));
+        return Response.ok().setPayload(userService.updateEmail(userEmail));
     }
+
+    @DeleteMapping("/{id}/email")
+    public Response deleteEmail(@PathVariable Long id) {
+        userService.deleteEmail(id);
+        return Response.ok();
+    }
+
 
     @PostMapping("/add/address")
     public Response addAddress(@RequestBody UserAddress userAddress) {
@@ -71,7 +118,13 @@ public class UserController extends CommonController {
     }
     @PutMapping("/add/address")
     public Response updateAddress(@RequestBody UserAddress userAddress) {
-        return Response.ok().setPayload(userService.addAddress(userAddress));
+        return Response.ok().setPayload(userService.updateAddress(userAddress));
+    }
+
+    @DeleteMapping ("/{id}/address")
+    public Response deleteAddress(@PathVariable Long id) {
+        userService.deleteAddress(id);
+        return Response.ok();
     }
 
 }

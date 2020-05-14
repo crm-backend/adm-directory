@@ -6,6 +6,7 @@ import com.crm.apis.common.services.exceptions.ServiceException;
 import com.crm.apis.common.services.utils.ValidatorUtils;
 import com.crm.apis.services.directory.users.domains.UserEmailEntity;
 import com.crm.apis.services.directory.users.domains.UserEntity;
+import com.crm.apis.services.directory.users.forms.UserEmail;
 import com.crm.apis.services.directory.users.repositories.UserEmailRepository;
 import com.crm.apis.services.directory.users.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,34 @@ public class UserEmailRules {
             throw ServiceException.throwException(EntityType.USER_EMAIL, ExceptionType.DUPLICATE_ENTITY, errors);
         }
         return entity;
+    }
+
+    public UserEmailEntity update(UserEmail form) {
+        List<String> errors = new ArrayList<>(0);
+        if (form.getId() == null) {
+            errors.add("id");
+            throw ServiceException.throwException(EntityType.USER_EMAIL, ExceptionType.FIELD_REQUIRED_EXCEPTION, errors);
+        }
+        if (ValidatorUtils.isEmpty(form.getUserId())) {
+            errors.add("userId");
+            throw ServiceException.throwException(EntityType.USER_EMAIL, ExceptionType.FIELD_REQUIRED_EXCEPTION, errors);
+        }
+        Optional<UserEmailEntity> entity = userEmailRepository.findById(form.getId());
+        if (!entity.isPresent()) {
+            errors.add("email.not.found");
+            throw ServiceException.throwException(EntityType.USER_EMAIL, ExceptionType.ENTITY_NOT_FOUND, errors);
+        }
+
+        // check email
+        if (ValidatorUtils.isEmpty(form.getEmail())) {
+            errors.add("email");
+            throw ServiceException.throwException(EntityType.USER_EMAIL, ExceptionType.FIELD_REQUIRED_EXCEPTION, errors);
+        } else if (!ValidatorUtils.emailIsValid(form.getEmail())) {
+            errors.add("invalideEmail");
+            throw ServiceException.throwException(EntityType.USER_EMAIL, ExceptionType.FIELD_INVALID_EXCEPTION, errors);
+        }
+
+        return entity.get();
     }
 
 

@@ -13,7 +13,7 @@ import java.util.List;
  * @author PoleData.
  */
 @Repository
-public interface UserEmailRepository extends JpaRepository<UserEmailEntity, String> {
+public interface UserEmailRepository extends JpaRepository<UserEmailEntity, Long> {
 
     @Query("select count(e) from UserEmailEntity e where e.userId = ?1 and e.email = ?2")
     long countUserIdAndEmail(Long userId,String email);

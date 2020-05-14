@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  * @author PoleData.
  */
 @Repository
-public interface UserAddressRepository extends JpaRepository<UserAddressEntity, String> {
+public interface UserAddressRepository extends JpaRepository<UserAddressEntity, Long> {
 
 }
